@@ -2,12 +2,6 @@
 
 The reasoning-first UI design plugin for Claude Code, focused on desktop applications.
 
-![Fleet operations dashboard, without vs with the skill](evals/gallery/dash-fleet-comparison.png)
-
-![Corporate treasury transfer flow, without vs with the skill](evals/gallery/finance-treasury-comparison.png)
-
-Same briefs, same model. Left: default generation (13 severe lint findings across five briefs: purple gradients, card soup, website font scales, placeholder people, dead keyboards). Right: the full workflow including the craft pass (0 severe findings; a written point of view, derived tokens, exemplar anatomy, and a novelty-ledger entry per design). Five briefs were run in total; these two were taken to full polish, three more ship as mechanics-verified draft HTML, and the difference between those tiers taught the skill its craft-pass rule: lint-clean is the floor, not the finish. Raw files and honest methodology caveats in [`evals/`](evals/).
-
 30 masters of design decomposed into stealable principles. Four annotated exemplar anatomies that separate structure from skin. A token derivation engine instead of a palette menu. A slop linter that enforces the rules deterministically. Critique, deslop, and envision modes. Design memory that persists per project. And a synthesis method that tests every output for originality.
 
 Not a style database. Not a brand-token library. The popular design skills are style pickers (searchable menus of glassmorphism and claymorphism palettes) or brand cloners (pixel-accurate "build it like Stripe" tokens). This plugin takes the opposite bet: teach the model the reasoning of the best designers in history, force deliberate tension between influences, verify the output against the rules, and test it for originality. Steal like an artist, from the masters, toward the future.
