@@ -1,0 +1,95 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Driftless - Settings</title>
+<!-- WITH SKILL. POINT OF VIEW: A file-sync tool's settings page is where users
+  come when they are worried (is my data safe, what synced, what conflicted),
+  so this surface is a calm ledger of truth, not a preference farm. Structure
+  by whitespace and type (Hara), every control's state visible and live-applied
+  (Norman), consequence-scaled ceremony for unlinking (N26/Taylor lens as
+  tension). Convention break: none. Tokens: --hue 200 --temperature cool
+  --density regular --register companion. Novelty ledger: the sync ledger is IN
+  settings as a first-class section: the last events, conflicts and their
+  resolutions, inspectable where the anxiety lives. -->
+<style>
+:root {
+  --n1: oklch(0.982 0.005 220); --n2: oklch(0.962 0.006 220); --n3: oklch(0.94 0.007 220);
+  --n4: oklch(0.915 0.008 220); --n6: oklch(0.85 0.009 220); --n8: oklch(0.55 0.012 220);
+  --n10: oklch(0.42 0.014 220); --n12: oklch(0.20 0.015 220);
+  --accent: oklch(0.55 0.12 200); --danger: oklch(0.53 0.17 25); --ok: oklch(0.55 0.13 150);
+  --m: 160ms; --e: cubic-bezier(0.2,0.8,0.2,1);
+}
+@media (prefers-reduced-motion: reduce) { :root { --m: 0ms; } }
+* { box-sizing: border-box; margin: 0; }
+body { font-family: 'Inter','SF Pro Text',system-ui,sans-serif; font-size: 13px; line-height: 1.45;
+  background: var(--n1); color: var(--n12); padding: 40px 24px; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 5px; }
+.num { font-variant-numeric: tabular-nums; }
+.page { max-width: 620px; margin: 0 auto; }
+h1 { font-size: 16px; font-weight: 600; }
+.machine { color: var(--n8); font-size: 12px; margin: 2px 0 26px; }
+.section { margin-bottom: 30px; }
+.section h2 { font-size: 11.5px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase;
+  color: var(--n8); padding-bottom: 6px; margin-bottom: 2px; border-bottom: 1px solid var(--n4); }
+.row { display: flex; align-items: center; gap: 24px; padding: 13px 0; border-bottom: 1px solid var(--n3); }
+.row:last-child { border-bottom: 0; }
+.row .t { flex: 1; min-width: 0; }
+.row .label { font-weight: 500; }
+.row .desc { color: var(--n8); font-size: 12px; margin-top: 1px; }
+select { font: inherit; height: 30px; padding: 0 8px; min-width: 170px; border: 1px solid var(--n4);
+  border-radius: 6px; background: var(--n1); color: var(--n12); transition: border-color var(--m) var(--e); }
+select:hover { border-color: var(--n6); }
+.switch { position: relative; width: 36px; height: 21px; flex: none; border: 0; border-radius: 11px;
+  background: var(--n6); cursor: pointer; transition: background var(--m) var(--e); }
+.switch::after { content: ''; position: absolute; top: 2px; left: 2px; width: 17px; height: 17px;
+  border-radius: 50%; background: var(--n1); transition: transform var(--m) var(--e); }
+.switch[aria-pressed="true"] { background: var(--accent); }
+.switch[aria-pressed="true"]::after { transform: translateX(15px); }
+.switch:hover { filter: brightness(.97); }
+/* The sync ledger: what happened to your data, right here */
+.ledger .ev { display: grid; grid-template-columns: 62px 1fr auto; gap: 12px; padding: 8px 0;
+  border-bottom: 1px solid var(--n3); font-size: 12.5px; color: var(--n10); }
+.ledger .ev:hover { color: var(--n12); }
+.ledger .when { color: var(--n8); }
+.ledger .state { color: var(--ok); }
+.ledger .state.conflict { color: var(--danger); }
+.ledger details { padding: 8px 0 2px; }
+.ledger summary { cursor: pointer; color: var(--n8); font-size: 12px; }
+.ledger summary:hover { color: var(--n10); }
+.danger-h { color: var(--danger) !important; border-bottom-color: oklch(0.53 0.17 25 / .25) !important; }
+.btn-danger { font: inherit; height: 30px; padding: 0 13px; border-radius: 6px; cursor: pointer;
+  border: 1px solid oklch(0.53 0.17 25 / .4); background: none; color: var(--danger);
+  transition: background var(--m) var(--e); }
+.btn-danger:hover { background: oklch(0.53 0.17 25 / .07); }
+</style></head><body><div class="page">
+<h1>Settings</h1>
+<p class="machine">This machine: ZAC-MBP-M4 · signed in as z.sonday · <span class="num">184,201</span> files in sync</p>
+
+<div class="section">
+  <h2>Sync</h2>
+  <div class="row"><div class="t"><div class="label">Sync automatically</div>
+    <div class="desc">Changes upload the moment you save. Off means sync only when you ask.</div></div>
+    <button class="switch" role="switch" aria-pressed="true" aria-label="Sync automatically" onclick="f(this)"></button></div>
+  <div class="row"><div class="t"><div class="label">When both sides changed a file</div>
+    <div class="desc">Both versions are always kept; this only decides which one keeps the name.</div></div>
+    <select aria-label="Conflict handling"><option>Keep newer, save other as copy</option><option>Always ask me</option><option>Prefer this machine</option></select></div>
+  <div class="row"><div class="t"><div class="label">Limit upload speed</div>
+    <div class="desc">Cap sync at 40% of available bandwidth while you are working.</div></div>
+    <button class="switch" role="switch" aria-pressed="false" aria-label="Limit upload speed" onclick="f(this)"></button></div>
+</div>
+
+<div class="section ledger">
+  <h2>Recent activity</h2>
+  <div class="ev"><span class="when num">14:22</span><span>Q3-forecast.xlsx uploaded from this machine</span><span class="state">Synced</span></div>
+  <div class="ev"><span class="when num">13:57</span><span>brand/logo-dark.svg changed on ZAC-STUDIO and here</span><span class="state conflict">Conflict, both kept</span></div>
+  <div class="ev"><span class="when num">13:41</span><span>contracts/ (12 files) received from ZAC-STUDIO</span><span class="state">Synced</span></div>
+  <details><summary>How the conflict was resolved</summary>
+    <div class="desc">The newer edit (ZAC-STUDIO, 13:56) kept the name. Your version was saved as logo-dark (conflicted copy 14 Jun).</div></details>
+</div>
+
+<div class="section">
+  <h2 class="danger-h">Danger zone</h2>
+  <div class="row"><div class="t"><div class="label">Unlink this machine</div>
+    <div class="desc">Files already on this disk stay. Sync stops until you sign in again. You will confirm by typing the machine name.</div></div>
+    <button class="btn-danger">Unlink ZAC-MBP-M4</button></div>
+</div>
+</div>
+<script>function f(t){t.setAttribute('aria-pressed', t.getAttribute('aria-pressed') !== 'true')}</script>
+</body></html>

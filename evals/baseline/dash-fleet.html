@@ -1,0 +1,33 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Fleet Dashboard</title>
+<!-- BASELINE: representative default generation for this brief (no skill). -->
+<style>
+body { font-family: 'Inter', sans-serif; font-size: 16px; margin: 0; background: #f9fafb; color: #111827; }
+.container { max-width: 1200px; margin: 0 auto; padding: 32px; }
+h1 { background: linear-gradient(90deg, #8b5cf6, #6366f1); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 32px; }
+.card { background: white; border: 1px solid #e5e7eb; border-radius: 16px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.card .icon { width: 40px; height: 40px; border-radius: 12px; background: linear-gradient(135deg, #8b5cf6, #6366f1); margin-bottom: 12px; }
+.card .label { color: #6b7280; font-size: 14px; }
+.card .value { font-size: 32px; font-weight: 700; }
+.badge { display: inline-block; padding: 4px 12px; border-radius: 9999px; font-size: 12px; background: #d1fae5; color: #065f46; }
+.badge.red { background: #fee2e2; color: #991b1b; }
+table { width: 100%; background: white; border-radius: 16px; border-collapse: collapse; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+th, td { padding: 16px 24px; text-align: left; border-bottom: 1px solid #e5e7eb; }
+th { background: #f9fafb; color: #6b7280; font-size: 14px; }
+button.cta { background: linear-gradient(90deg, #8b5cf6, #6366f1); color: white; border: none; padding: 12px 24px; border-radius: 9999px; font-size: 16px; transition: all 600ms ease-in; }
+</style></head><body>
+<div class="container">
+<h1>Fleet Dashboard</h1>
+<div class="stats">
+  <div class="card"><div class="icon"></div><div class="label">Total Vehicles</div><div class="value">300</div><span class="badge">+2.5%</span></div>
+  <div class="card"><div class="icon"></div><div class="label">Active Routes</div><div class="value">142</div><span class="badge">+1.2%</span></div>
+  <div class="card"><div class="icon"></div><div class="label">Exceptions</div><div class="value">7</div><span class="badge red">-0.8%</span></div>
+</div>
+<div class="card" style="margin-bottom: 24px"><button class="cta">View All Vehicles</button></div>
+<table>
+<tr><th>Vehicle</th><th>Driver</th><th>Status</th><th>Fuel</th></tr>
+<tr><td>Truck 001</td><td>John Doe</td><td><span class="badge">Active</span></td><td>78%</td></tr>
+<tr><td>Truck 002</td><td>Jane Doe</td><td><span class="badge">Active</span></td><td>52%</td></tr>
+<tr><td>Truck 003</td><td>John Smith</td><td><span class="badge red">Delayed</span></td><td>31%</td></tr>
+</table>
+</div></body></html>

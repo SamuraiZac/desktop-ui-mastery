@@ -1,0 +1,26 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Treasury</title>
+<!-- BASELINE: representative default generation (no skill). -->
+<style>
+body { font-family: 'Inter', sans-serif; font-size: 16px; margin: 0; background: #0f172a; color: white; }
+.container { max-width: 1000px; margin: 0 auto; padding: 40px; }
+h1 { font-size: 30px; background: linear-gradient(90deg, #8b5cf6, #06b6d4); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin: 28px 0; }
+.card { background: rgba(255,255,255,0.06); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.12); border-radius: 20px; padding: 26px; box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
+.value { font-size: 30px; font-weight: 700; }
+.badge { display: inline-block; margin-top: 8px; padding: 4px 12px; border-radius: 9999px; font-size: 12px; background: rgba(16,185,129,0.2); color: #34d399; }
+.transfer { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 20px; padding: 28px; }
+input, select { width: 100%; margin: 8px 0 18px; padding: 14px; font-size: 16px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.05); color: white; }
+.send { width: 100%; padding: 16px; border: none; border-radius: 9999px; font-size: 17px; color: white; background: linear-gradient(90deg, #8b5cf6, #06b6d4); transition: all 450ms ease-in; }
+</style></head><body><div class="container">
+<h1>Treasury Overview</h1>
+<div class="cards">
+  <div class="card">Total Balance<div class="value">$12.4M</div><span class="badge">+2.1%</span></div>
+  <div class="card">Available<div class="value">$8.7M</div><span class="badge">+0.4%</span></div>
+  <div class="card">Pending<div class="value">$1.2M</div><span class="badge">3 transfers</span></div>
+</div>
+<div class="transfer"><h2>New Transfer</h2>
+  <label>From</label><select><option>Operating Account</option></select>
+  <label>To</label><select><option>Payroll Account</option></select>
+  <label>Amount</label><input placeholder="$0.00">
+  <button class="send">Send Transfer</button></div>
+</div></body></html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Meridian Ops - Fleet</title>
+<!-- WITH SKILL. POINT OF VIEW: A night-shift control room. Ops staff watch this
+  for eight hours, so the surface is warm-dark (low fatigue) and exception-led:
+  healthy vehicles earn almost no ink, trouble earns all of it. Lenses: Tufte
+  (density, direct labels, the strip) x Kowalski (zero motion on the hot path),
+  Fantasy as tension: ONE signature element, the fleet strip, allowed to
+  dominate the squint test. Tokens: --hue 60 --temperature warm --density
+  compact --register instrument. Novelty ledger: the fleet strip (300 vehicles
+  as one glanceable band, severity as height) and the adherence ribbon with a
+  90% target tick. Justified lint warning: none expected. -->
+<style>
+:root {
+  --n0: oklch(0.16 0.008 70); --n1: oklch(0.19 0.009 70); --n2: oklch(0.22 0.01 70);
+  --n3: oklch(0.255 0.01 70); --n4: oklch(0.30 0.01 70); --n6: oklch(0.40 0.01 70);
+  --n8: oklch(0.60 0.012 70); --n10: oklch(0.78 0.01 70); --n12: oklch(0.965 0.006 85);
+  --amber: oklch(0.80 0.135 80); --amber-dim: oklch(0.66 0.11 78);
+  --red: oklch(0.66 0.185 30); --red-dim: oklch(0.5 0.14 30);
+  --ok: oklch(0.7 0.1 150);
+  --m: 130ms; --e: cubic-bezier(0.2,0,0,1);
+}
+@media (prefers-reduced-motion: reduce) { :root { --m: 0ms; } }
+* { box-sizing: border-box; margin: 0; }
+body { font-family: 'Inter','SF Pro Text','Segoe UI Variable',system-ui,sans-serif;
+  font-size: 13px; line-height: 1.3; background: var(--n0); color: var(--n12);
+  height: 100vh; display: flex; flex-direction: column; overflow: hidden;
+  font-feature-settings: 'cv05','cv10'; }
+:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; border-radius: 4px; }
+.num { font-variant-numeric: tabular-nums; }
+.cap { font-size: 10.5px; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; color: var(--n8); }
+
+/* ===== TOP BAR: product mark + the shift's vital signs as a stat cluster ===== */
+.top { height: 58px; flex: none; display: flex; align-items: center; gap: 28px; padding: 0 20px;
+  background: var(--n1); border-bottom: 1px solid var(--n3); }
+.mark { display: flex; align-items: center; gap: 10px; margin-right: 4px; }
+.mark svg { display: block; }
+.mark .name { font-size: 14px; font-weight: 650; letter-spacing: -0.01em; }
+.mark .shift { font-size: 11px; color: var(--n8); margin-top: 1px; }
+.stat { display: flex; flex-direction: column; gap: 1px; }
+.stat .v { font-size: 21px; font-weight: 620; letter-spacing: -0.02em; line-height: 1; }
+.stat .v small { font-size: 12px; font-weight: 450; color: var(--n8); letter-spacing: 0; }
+.stat .v.bad { color: var(--red); }
+.stat .v.warn { color: var(--amber); }
+.clockbox { margin-left: auto; text-align: right; }
+.clockbox .t { font-size: 21px; font-weight: 620; letter-spacing: -0.01em; line-height: 1; }
+.clockbox .d { font-size: 11px; color: var(--n8); margin-top: 2px; }
+
+/* ===== THE SIGNATURE: the fleet strip. 300 vehicles, one glance. ===== */
+.strip-zone { flex: none; padding: 14px 20px 12px; background: var(--n1); border-bottom: 1px solid var(--n3); }
+.strip-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 8px; }
+.strip-head .legend { display: flex; gap: 14px; margin-left: auto; font-size: 11px; color: var(--n8); }
+.legend i { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 5px; vertical-align: -1px; }
+.strip { display: flex; align-items: flex-end; gap: 2px; height: 40px; }
+.strip .gap { width: 8px; flex: none; }
+.strip i { flex: 1; height: 12px; border-radius: 1px; background: var(--n4); transition: background var(--m) var(--e); }
+.strip i:hover { background: var(--n6); }
+.strip i.warn { height: 24px; background: var(--amber-dim); }
+.strip i.warn:hover { background: var(--amber); }
+.strip i.bad { height: 40px; background: var(--red); }
+.strip .marks { display: flex; margin-top: 5px; font-size: 10px; color: var(--n6); }
+.strip-zone .marks span { flex: 1; }
+
+.body { flex: 1; display: flex; min-height: 0; }
+
+/* ===== EXCEPTIONS RAIL: trouble first, as cards with severity edge ===== */
+.rail { width: 296px; flex: none; overflow-y: auto; background: var(--n1); border-right: 1px solid var(--n3); padding: 14px 12px; }
+.rail .cap { display: block; padding: 0 4px 10px; }
+.exc { width: 100%; text-align: left; font: inherit; color: var(--n10); background: var(--n2);
+  border: 1px solid var(--n3); border-left: 3px solid var(--red); border-radius: 6px;
+  padding: 10px 12px; margin-bottom: 8px; cursor: pointer;
+  transition: background var(--m) var(--e), border-color var(--m) var(--e); }
+.exc:hover { background: var(--n3); border-color: var(--n4); border-left-color: var(--red); }
+.exc.warn { border-left-color: var(--amber-dim); }
+.exc .l1 { display: flex; justify-content: space-between; align-items: baseline; }
+.exc .id { font-weight: 620; color: var(--n12); font-size: 13px; }
+.exc .age { font-size: 11px; color: var(--n8); }
+.exc .why { display: block; font-size: 12px; line-height: 1.45; margin-top: 3px; color: var(--n10); }
+.exc .act { display: block; font-size: 11.5px; margin-top: 6px; color: var(--amber); font-weight: 500;
+  opacity: 0; transition: opacity var(--m) var(--e); }
+.exc:hover .act, .exc:focus-visible .act { opacity: 1; }
+
+/* ===== MAIN TABLE: headers, rhythm, the adherence ribbon ===== */
+.main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.main-head { display: flex; align-items: baseline; gap: 12px; padding: 16px 22px 10px; }
+.main-head h1 { font-size: 15px; font-weight: 620; letter-spacing: -0.01em; }
+.main-head .n { color: var(--n8); font-size: 12px; }
+.cols, .vrow { display: grid; grid-template-columns: 110px 1fr 190px 70px 88px; gap: 18px; align-items: center; padding: 0 22px; }
+.cols { height: 30px; border-bottom: 1px solid var(--n3); }
+.cols span { font-size: 10.5px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--n8); }
+.cols .r { text-align: right; }
+.grid { flex: 1; overflow-y: auto; }
+.vrow { height: 33px; border-bottom: 1px solid var(--n2); transition: background var(--m) var(--e); }
+.vrow:hover { background: var(--n1); }
+.vrow .id { color: var(--n8); font-size: 12.5px; }
+.vrow:hover .id { color: var(--n10); }
+.vrow .route { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 450; }
+.adhwrap { display: flex; align-items: center; gap: 10px; }
+.adh { position: relative; flex: 1; height: 6px; background: var(--n3); border-radius: 3px; }
+.adh i { position: absolute; inset: 0 auto 0 0; border-radius: 3px; background: var(--n6); }
+.vrow:hover .adh i { background: var(--n8); }
+.adh.low i { background: var(--red-dim); }
+.vrow:hover .adh.low i { background: var(--red); }
+.adh::after { content: ''; position: absolute; left: 90%; top: -3px; bottom: -3px; width: 1px; background: var(--n6); }
+.adhwrap .pct { width: 34px; text-align: right; font-size: 12px; color: var(--n8); }
+.adhwrap .pct.low { color: var(--red); font-weight: 550; }
+.vrow .fuel { text-align: right; color: var(--n10); }
+.vrow .fuel.low { color: var(--red); font-weight: 550; }
+.vrow .eta { text-align: right; color: var(--n8); font-size: 12px; }
+.vrow .eta.stopped { color: var(--red); font-weight: 550; }
+
+.statusbar { height: 28px; flex: none; display: flex; gap: 20px; align-items: center; padding: 0 20px;
+  font-size: 11.5px; color: var(--n8); background: var(--n1); border-top: 1px solid var(--n3); }
+.statusbar .live { color: var(--ok); }
+.statusbar .live::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--ok); margin-right: 6px; vertical-align: 0.5px; }
+.statusbar .spring { margin-left: auto; }
+</style></head><body>
+<header class="top">
+  <div class="mark">
+    <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><circle cx="13" cy="13" r="11" fill="none" stroke="oklch(0.4 0.01 70)" stroke-width="2"/><path d="M13 2 A11 11 0 0 1 24 13" fill="none" stroke="oklch(0.8 0.135 80)" stroke-width="2" stroke-linecap="round"/><circle cx="13" cy="13" r="2.5" fill="oklch(0.965 0.006 85)"/></svg>
+    <div><div class="name">Meridian Ops</div><div class="shift">Night shift B · Cape Town control</div></div>
+  </div>
+  <div class="stat"><span class="cap">On route</span><span class="v num">293<small> / 300</small></span></div>
+  <div class="stat"><span class="cap">Exceptions</span><span class="v num bad">7</span></div>
+  <div class="stat"><span class="cap">Fuel median</span><span class="v num">61<small>%</small></span></div>
+  <div class="stat"><span class="cap">Adherence</span><span class="v num">94.2<small>%</small></span></div>
+  <div class="clockbox"><div class="t num">03:41</div><div class="d">Handover 06:00 · Fri 04 Jul</div></div>
+</header>
+
+<div class="strip-zone">
+  <div class="strip-head">
+    <span class="cap">Fleet · every vehicle, live</span>
+    <div class="legend"><span><i style="background:var(--n4)"></i>Nominal</span><span><i style="background:var(--amber-dim)"></i>Watch</span><span><i style="background:var(--red)"></i>Exception</span></div>
+  </div>
+  <div class="strip" id="strip" aria-label="300 vehicles by state"></div>
+  <div class="marks" style="display:flex;margin-top:5px;font-size:10px;color:var(--n6)"><span style="flex:1" class="num">001</span><span style="flex:1;text-align:center" class="num">100</span><span style="flex:1;text-align:center" class="num">200</span><span style="text-align:right" class="num">300</span></div>
+</div>
+
+<div class="body">
+  <nav class="rail" aria-label="Exceptions">
+    <span class="cap">Exceptions · 7 open</span>
+    <button class="exc"><span class="l1"><span class="id num">TRK-2118</span><span class="age num">47 min</span></span>
+      <span class="why">Stopped on N1 near Beaufort West, no depot ping since 02:54</span><span class="act">Call driver · Dispatch recovery</span></button>
+    <button class="exc"><span class="l1"><span class="id num">TRK-2094</span><span class="age num">12 min</span></span>
+      <span class="why">Fuel 9% with 68 km to nearest partner station, R300 Kuils River</span><span class="act">Reroute to Engen Blackheath</span></button>
+    <button class="exc warn"><span class="l1"><span class="id num">TRK-1866</span><span class="age num">31 min</span></span>
+      <span class="why">Route deviation 12 km on N2 past Swellendam, driver unreachable</span><span class="act">Escalate to shift lead</span></button>
+    <button class="exc warn"><span class="l1"><span class="id num">TRK-2041</span><span class="age num">8 min</span></span>
+      <span class="why">Door sensor open in transit, M5 Ottery, cold-chain load</span><span class="act">Call driver</span></button>
+  </nav>
+  <main class="main">
+    <div class="main-head"><h1>All vehicles</h1><span class="n num">300 vehicles · 142 active routes · sorted by risk</span></div>
+    <div class="cols"><span>Vehicle</span><span>Route</span><span>Adherence · target 90</span><span class="r">Fuel</span><span class="r">ETA</span></div>
+    <div class="grid" id="grid"></div>
+    <footer class="statusbar"><span class="live">Telemetry live · 4 s lag</span><span class="num">Weather: N1 fog advisory until 05:00</span><span class="spring num">Meridian Ops 3.2.1</span></footer>
+  </main>
+</div>
+<script>
+const states = Array.from({length: 300}, (_, i) => i % 43 === 0 ? 'bad' : (i % 17 === 0 ? 'warn' : ''));
+document.getElementById('strip').innerHTML = states.map((s, i) =>
+  `<i class="${s}" title="TRK-${1900 + i}"></i>${(i + 1) % 50 === 0 && i < 299 ? '<span class="gap"></span>' : ''}`).join('');
+const rows = [
+  ['TRK-2118','Cape Town Depot to Beaufort West cross-dock',34,9,'Stopped',1],
+  ['TRK-2094','Epping to Somerset West retail loop',88,9,'11:05',1],
+  ['TRK-1866','Airport Industria to Mossel Bay',52,58,'14:20',0],
+  ['TRK-2041','Killarney Gardens to Ottery cold chain',71,44,'04:50',0],
+  ['TRK-2201','Paarl DC to Port Elizabeth Ring 4',91,72,'18:40',0],
+  ['TRK-1990','Killarney Gardens to George overnight',97,64,'05:15',0],
+  ['TRK-2177','Montague Gardens to Saldanha port run',95,81,'09:55',0],
+];
+const dests=['Worcester DC','Hermanus retail','Vredenburg cold chain','Stellenbosch depot','Langebaan coastal','George overnight','Paarl DC return','Mossel Bay','Saldanha port run','Somerset West loop'];
+const origins=['Cape Town Depot','Paarl DC','Epping','Killarney Gardens','Airport Industria','Montague Gardens','Bellville South','Blackheath'];
+for (let i = 0; i < 20; i++) {
+  const adh=[98,96,94,93,91,95,97,92,96,94][i%10]-(i%2); const fuel=[82,74,66,58,51,71,63,55,77,69][i%10];
+  rows.push(['TRK-'+(2205+i), origins[i%origins.length]+' to '+dests[i%dests.length], adh, fuel, (5+(i*37)%18)+':'+String((i*13)%60).padStart(2,'0'), 0]);
+}
+document.getElementById('grid').innerHTML = rows.map(([id,route,adh,fuel,eta,stop]) => `
+  <div class="vrow" tabindex="0">
+    <span class="id num">${id}</span><span class="route">${route}</span>
+    <span class="adhwrap"><span class="adh ${adh<70?'low':''}"><i style="width:${adh}%"></i></span><span class="pct num ${adh<70?'low':''}">${adh}</span></span>
+    <span class="fuel num ${fuel<15?'low':''}">${fuel}%</span><span class="eta num ${stop?'stopped':''}">${eta}</span>
+  </div>`).join('');
+</script></body></html>

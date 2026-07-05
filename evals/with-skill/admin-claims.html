@@ -1,0 +1,94 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Cairn - Claims</title>
+<!-- WITH SKILL. POINT OF VIEW: An assessor touches 100+ claims a day, so this is
+  a keyboard instrument: queue left, live claim right, and the whole decide-loop
+  (open, read, decide, next) runs on J/K/A/F/Enter with the hands never leaving
+  home row. Lenses: Raskin (visible state, keystroke economy, no hidden modes) x
+  Saarinen (opinionated single flow, taught shortcuts) with Hara as tension
+  (the detail pane gets air even though the queue is dense). Convention break:
+  none. Tokens: --hue 150 --temperature neutral --density compact --register
+  instrument, light theme. Novelty ledger: the decision bar shows the keystroke
+  AS the button label, so the UI itself is the cheat sheet: habituation by
+  reading (Raskin) not by memorizing. -->
+<style>
+:root {
+  --n1: oklch(0.985 0 0); --n2: oklch(0.97 0 0); --n3: oklch(0.95 0 0); --n4: oklch(0.925 0 0);
+  --n6: oklch(0.85 0 0); --n8: oklch(0.55 0 0); --n10: oklch(0.4 0 0); --n12: oklch(0.14 0 0);
+  --accent: oklch(0.52 0.14 150); --accent-sub: oklch(0.94 0.04 150); --flag: oklch(0.6 0.15 60);
+  --m: 120ms; --e: cubic-bezier(0.2,0,0,1);
+}
+@media (prefers-reduced-motion: reduce) { :root { --m: 0ms; } }
+* { box-sizing: border-box; margin: 0; }
+body { font-family: 'Inter','SF Pro Text',system-ui,sans-serif; font-size: 13px; line-height: 1.3;
+  background: var(--n1); color: var(--n12); height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.num { font-variant-numeric: tabular-nums; }
+kbd { font-family: inherit; font-size: 11px; padding: 1px 5px; border-radius: 3px; background: var(--n3);
+  border: 1px solid var(--n4); color: var(--n10); }
+.top { height: 40px; flex: none; display: flex; align-items: center; gap: 14px; padding: 0 14px;
+  border-bottom: 1px solid var(--n4); }
+.top b { font-weight: 600; }
+.top .prog { color: var(--n8); font-size: 12px; }
+.top .hint { margin-left: auto; color: var(--n8); font-size: 12px; }
+.body { flex: 1; display: flex; min-height: 0; }
+.queue { width: 300px; flex: none; overflow-y: auto; border-right: 1px solid var(--n4); }
+.q-item { display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; width: 100%; text-align: left;
+  font: inherit; border: 0; background: none; padding: 7px 12px; cursor: pointer; border-left: 2px solid transparent;
+  transition: background var(--m) var(--e); }
+.q-item:hover { background: var(--n2); }
+.q-item[aria-current="true"] { background: var(--accent-sub); border-left-color: var(--accent); }
+.q-item .who { font-weight: 500; }
+.q-item .amt { text-align: right; }
+.q-item .meta { grid-column: 1 / -1; color: var(--n8); font-size: 12px; }
+.q-item .meta .flag { color: var(--flag); font-weight: 500; }
+.detail { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.d-head { padding: 18px 26px 0; }
+.d-head h1 { font-size: 17px; font-weight: 600; }
+.d-head .sub { color: var(--n8); font-size: 12px; margin-top: 2px; }
+.facts { flex: 1; overflow-y: auto; padding: 14px 26px; max-width: 640px; }
+.fact { display: grid; grid-template-columns: 150px 1fr; gap: 16px; padding: 9px 0; border-bottom: 1px solid var(--n3); }
+.fact dt { color: var(--n8); }
+.fact dd { margin: 0; }
+.fact .warn { color: var(--flag); }
+/* Decision bar: the keystroke IS the label */
+.decide { flex: none; display: flex; gap: 8px; align-items: center; padding: 12px 26px;
+  border-top: 1px solid var(--n4); background: var(--n2); }
+.decide button { font: inherit; height: 32px; padding: 0 14px; border-radius: 5px; cursor: pointer;
+  border: 1px solid var(--n4); background: var(--n1); color: var(--n12); display: flex; align-items: center; gap: 8px;
+  transition: background var(--m) var(--e), border-color var(--m) var(--e); }
+.decide button:hover { border-color: var(--n6); background: var(--n1); }
+.decide button:active { background: var(--n3); }
+.decide .primary { background: var(--accent); border-color: var(--accent); color: oklch(0.99 0.005 150); }
+.decide .primary:hover { filter: brightness(1.06); background: var(--accent); }
+.decide .nav { margin-left: auto; color: var(--n8); font-size: 12px; }
+</style></head><body>
+<header class="top"><b>Cairn Claims</b><span class="prog num">Queue: 84 · decided today: 31 · median 4m 12s</span>
+  <span class="hint">All actions in <kbd>Cmd</kbd><kbd>K</kbd></span></header>
+<div class="body">
+  <nav class="queue" aria-label="Claim queue">
+    <button class="q-item" aria-current="true"><span class="who">Nomvula Dlamini</span><span class="amt num">R 48,200</span>
+      <span class="meta num">CLM-10231 · Auto collision · submitted 2d ago</span></button>
+    <button class="q-item"><span class="who">Pieter van Rooyen</span><span class="amt num">R 132,750</span>
+      <span class="meta num">CLM-10232 · Storm damage · <span class="flag">flagged: prior claim 4 mo</span></span></button>
+    <button class="q-item"><span class="who">Ayesha Khan</span><span class="amt num">R 8,940</span>
+      <span class="meta num">CLM-10233 · Windscreen · submitted 4h ago</span></button>
+    <button class="q-item"><span class="who">Thabo Mokoena</span><span class="amt num">R 61,300</span>
+      <span class="meta num">CLM-10234 · Theft, vehicle · submitted 1d ago</span></button>
+  </nav>
+  <main class="detail">
+    <div class="d-head"><h1>Nomvula Dlamini · <span class="num">R 48,200</span></h1>
+      <div class="sub num">CLM-10231 · Auto collision · Policy PV-88-2201 · in force since 2021</div></div>
+    <dl class="facts">
+      <div class="fact"><dt>Incident</dt><dd>Rear-end collision, N2 inbound, 28 Jun 06:52. Third party admitted fault on scene.</dd></div>
+      <div class="fact"><dt>Assessor photos</dt><dd class="num">14 received, damage consistent with description</dd></div>
+      <div class="fact"><dt>Quote</dt><dd class="num">R 48,200 (Panelworx Obs.) vs book estimate R 44,900 <span class="warn">+7.3% over book</span></dd></div>
+      <div class="fact"><dt>Excess</dt><dd class="num">R 5,000, standard</dd></div>
+      <div class="fact"><dt>History</dt><dd>No prior claims on this policy</dd></div>
+    </dl>
+    <div class="decide">
+      <button class="primary"><kbd style="background:transparent;border-color:oklch(0.99 0 0/.4);color:inherit">A</kbd> Approve R 48,200</button>
+      <button><kbd>R</kbd> Request docs</button>
+      <button><kbd>F</kbd> Flag for review</button>
+      <span class="nav"><kbd>J</kbd>/<kbd>K</kbd> next / previous claim</span>
+    </div>
+  </main>
+</div></body></html>

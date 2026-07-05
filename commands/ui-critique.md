@@ -1,0 +1,3 @@
+Review the specified UI (code, screenshot, or running app) using the desktop-ui-mastery skill.
+
+First run `python3 "${CLAUDE_PLUGIN_ROOT}/skills/desktop-ui-mastery/scripts/lint_slop.py"` on the relevant files and fold its findings into the review. Then read references/critique-and-deslop.md and references/desktop-craft.md, plus the designer files for whichever lenses the design invokes, and run the six-step critique: point of view, the 100x action, desktop mechanics checklist (pass/fail per point), lens fidelity with cited principles, the synthesis distance checks, and a verdict with the top three principle-tied fixes. If the project has a DESIGN-POV.md, judge against its recorded decisions. Do not soften the verdict.

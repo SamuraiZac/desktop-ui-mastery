@@ -1,0 +1,15 @@
+{
+  "_comment": "OPTIONAL: rename to hooks.json to auto-lint UI files after every write/edit. Non-blocking: findings surface as feedback, never as a hard stop. Requires python3 only (no jq).",
+  "PostToolUse": [
+    {
+      "matcher": "Write|Edit",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "python3 -c \"import sys,json,subprocess,os; d=json.load(sys.stdin); f=d.get('tool_input',{}).get('file_path',''); e=os.path.splitext(f)[1].lower(); sys.exit(0) if e not in ('.html','.css','.jsx','.tsx','.vue','.svelte') else subprocess.run(['python3', os.path.join(os.environ.get('CLAUDE_PLUGIN_ROOT','.'),'skills','desktop-ui-mastery','scripts','lint_slop.py'), f])\"",
+          "timeout": 20
+        }
+      ]
+    }
+  ]
+}

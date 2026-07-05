@@ -1,0 +1,7 @@
+{
+  "name": "desktop-ui-mastery",
+  "version": "1.0.0",
+  "description": "Design world-class desktop application interfaces by synthesizing principles from 30 masters of design. Reasoning library, synthesis method, exemplar anatomies, token derivation, slop linting, and critique/deslop/envision commands.",
+  "license": "MIT",
+  "keywords": ["design", "ui", "desktop", "design-system", "critique", "typography", "tokens"]
+}

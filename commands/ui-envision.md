@@ -1,0 +1,3 @@
+Imagine a future version of the specified interface or product using the desktop-ui-mastery skill.
+
+Read references/synthesis.md (the imagining-futures section) and the paradigm-tier designer files (Kay, Raskin, Norman, Cooper, Victor, Yuan), plus Wiggins and Ryo Lu for local-first and AI-native patterns. Define the concept's primitives and their grammar before any visuals, break exactly one paradigm assumption and keep everything else conventional, then deliver: the point of view, the primitives, the one break and its justification, key screens or flows (built, where feasible, on the exemplar anatomies with a derived skin), and an honest ladder back to what could ship this year.

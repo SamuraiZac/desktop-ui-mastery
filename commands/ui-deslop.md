@@ -1,0 +1,3 @@
+Strip generated-UI tells from the specified screens or code using the desktop-ui-mastery skill.
+
+Run `python3 "${CLAUDE_PLUGIN_ROOT}/skills/desktop-ui-mastery/scripts/lint_slop.py"` on the target files, then read references/critique-and-deslop.md and inventory remaining violations against the slop list (layout, visual, behavioral, content tells). Fix in the prescribed order: content realism, layout anatomy, spacing hierarchy, accent discipline, type scale, interaction states, decoration removal. Add no new styling direction during this pass; deslop returns the design to honest zero. Rerun the linter to confirm zero severe findings, and report what was found and changed. If direction is wanted afterward, continue into the skill's Generate workflow.

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Exemplar: Command Palette</title>
+<!--
+  EXEMPLAR: THE COMMAND PALETTE (Cmd+K)
+  =====================================
+  The app's index (coursey): every verb and noun in one fast, fuzzy,
+  keyboard-native surface. Behavioral contract demonstrated here:
+  - Instant filter as you type; results never reorder under a committed selection
+  - Full keyboard: arrows traverse, Enter commits, Escape dismisses,
+    typing always goes to the field regardless of focus
+  - Verbs carry their shortcuts, teaching mastery in place (saarinen)
+  - Origin-aware entrance: 150ms scale+fade from center top, exit faster (kowalski)
+  - Sections group nouns and verbs; selection is a real highlighted state
+  Press Cmd/Ctrl+K to open. Skin is quiet on purpose; derive your own.
+-->
+<style>
+  :root {
+    --neutral-1: oklch(0.19 0.008 250); --neutral-2: oklch(0.22 0.008 250);
+    --neutral-3: oklch(0.25 0.008 250); --neutral-4: oklch(0.29 0.008 250);
+    --neutral-8: oklch(0.56 0.008 250); --neutral-10: oklch(0.72 0.008 250);
+    --neutral-12: oklch(0.94 0.005 250);
+    --accent: oklch(0.70 0.14 250);
+    --font-ui: 'Inter', 'SF Pro Text', 'Segoe UI Variable', system-ui, sans-serif;
+    --motion: 150ms; --motion-exit: 100ms; --ease: cubic-bezier(0.2, 0, 0, 1);
+  }
+  @media (prefers-reduced-motion: reduce) { :root { --motion: 0ms; --motion-exit: 0ms; } }
+  * { box-sizing: border-box; margin: 0; }
+  body { font-family: var(--font-ui); font-size: 13px; line-height: 1.25; color: var(--neutral-12); background: var(--neutral-1); height: 100vh; display: grid; place-items: center; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+  .hint { color: var(--neutral-8); }
+  .hint:hover { color: var(--neutral-10); }
+  .hint kbd { padding: 1px 6px; border-radius: 4px; background: var(--neutral-3); font-family: inherit; }
+
+  .overlay {
+    position: fixed; inset: 0; display: none;
+    background: oklch(0.1 0.005 250 / 0.4);
+    align-items: flex-start; justify-content: center; padding-top: 15vh;
+  }
+  .overlay.open { display: flex; }
+  .palette {
+    width: 560px; max-height: 380px; display: flex; flex-direction: column;
+    background: var(--neutral-2); border: 1px solid var(--neutral-4);
+    border-radius: 10px; overflow: hidden;
+    /* Elevation: shadow is earned here, this is a true floating layer (desktop-craft #5).
+       lint_slop will WARN border-plus-shadow on this rule; it is justified and
+       recorded here, which is exactly how a warning should be handled: named
+       and defended in writing, never silently ignored. */
+    box-shadow: 0 16px 48px oklch(0.05 0 0 / 0.45);
+    transform-origin: top center; /* origin-aware: grows from where it appears (kowalski) */
+    animation: pal-in var(--motion) var(--ease);
+  }
+  .overlay.closing .palette { animation: pal-out var(--motion-exit) var(--ease) forwards; }
+  @keyframes pal-in { from { opacity: 0; transform: scale(0.98) translateY(-4px); } }
+  @keyframes pal-out { to { opacity: 0; transform: scale(0.98) translateY(-4px); } }
+
+  .palette input {
+    all: unset; height: 44px; padding: 0 14px; font-size: 14px;
+    border-bottom: 1px solid var(--neutral-3); color: var(--neutral-12);
+  }
+  .palette input::placeholder { color: var(--neutral-8); }
+  .results { overflow-y: auto; padding: 6px; }
+  .section { font-size: 11px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--neutral-8); padding: 8px 8px 4px; }
+  .item {
+    display: flex; align-items: center; gap: 10px; height: 34px; padding: 0 8px;
+    border-radius: 6px; color: var(--neutral-10); cursor: pointer;
+  }
+  .item[aria-selected="true"] { background: var(--neutral-3); color: var(--neutral-12); }
+  .item:hover { background: var(--neutral-3); }
+  .item .kbd { margin-left: auto; display: flex; gap: 3px; }
+  .item kbd { font-family: inherit; font-size: 11px; padding: 1px 5px; border-radius: 3px; background: var(--neutral-4); color: var(--neutral-10); }
+  .empty { padding: 20px 12px; color: var(--neutral-8); }
+</style>
+</head>
+<body>
+
+<p class="hint">Press <kbd>Cmd</kbd> <kbd>K</kbd> (or <kbd>Ctrl</kbd> <kbd>K</kbd>) to open the command menu.</p>
+
+<div class="overlay" id="overlay">
+  <div class="palette" role="dialog" aria-label="Command menu">
+    <input id="q" type="text" placeholder="Type a command or search" autocomplete="off"
+           role="combobox" aria-expanded="true" aria-controls="results">
+    <div class="results" id="results" role="listbox"></div>
+  </div>
+</div>
+
+<script>
+  /* The command registry: the app's complete verb+noun inventory (coursey).
+     Names match menus and context menus exactly, so learning transfers (saarinen). */
+  const COMMANDS = [
+    { s: 'Actions', label: 'New shipment', kbd: ['N'] },
+    { s: 'Actions', label: 'Assign carrier', kbd: ['A'] },
+    { s: 'Actions', label: 'Export selection', kbd: ['Cmd', 'E'] },
+    { s: 'Actions', label: 'Archive shipment', kbd: [] },
+    { s: 'Go to',   label: 'Shipments', kbd: ['G', 'S'] },
+    { s: 'Go to',   label: 'Exceptions', kbd: ['G', 'E'] },
+    { s: 'Go to',   label: 'Carriers', kbd: ['G', 'C'] },
+    { s: 'Go to',   label: 'Forecast', kbd: ['G', 'F'] },
+    { s: 'View',    label: 'Toggle sidebar', kbd: ['Cmd', '\\'] },
+    { s: 'View',    label: 'Switch to dark theme', kbd: [] },
+    { s: 'Help',    label: 'Keyboard shortcuts', kbd: ['?'] },
+    { s: 'Help',    label: 'Open settings', kbd: ['Cmd', ','] },
+  ];
+
+  const overlay = document.getElementById('overlay');
+  const q = document.getElementById('q');
+  const list = document.getElementById('results');
+  let filtered = COMMANDS, sel = 0;
+
+  /* Simple subsequence fuzzy match: fast, predictable, no reordering surprises */
+  const fuzzy = (needle, hay) => {
+    needle = needle.toLowerCase(); hay = hay.toLowerCase();
+    let i = 0;
+    for (const ch of hay) if (ch === needle[i]) i++;
+    return i === needle.length;
+  };
+
+  function render() {
+    list.innerHTML = '';
+    if (!filtered.length) {
+      list.innerHTML = '<div class="empty">No matching commands. Try a shorter query.</div>';
+      return;
+    }
+    let lastSection = null;
+    filtered.forEach((c, i) => {
+      if (c.s !== lastSection) {
+        lastSection = c.s;
+        const h = document.createElement('div');
+        h.className = 'section'; h.textContent = c.s; list.appendChild(h);
+      }
+      const el = document.createElement('div');
+      el.className = 'item'; el.setAttribute('role', 'option');
+      el.setAttribute('aria-selected', i === sel);
+      el.innerHTML = '<span>' + c.label + '</span>' +
+        '<span class="kbd">' + c.kbd.map(k => '<kbd>' + k + '</kbd>').join('') + '</span>';
+      el.addEventListener('click', () => commit(i));
+      el.addEventListener('mousemove', () => { if (sel !== i) { sel = i; render(); } });
+      list.appendChild(el);
+    });
+    const active = list.querySelector('[aria-selected="true"]');
+    if (active) active.scrollIntoView({ block: 'nearest' });
+  }
+
+  function open() { overlay.classList.add('open'); overlay.classList.remove('closing'); q.value = ''; filtered = COMMANDS; sel = 0; render(); q.focus(); }
+  function close() {
+    overlay.classList.add('closing');
+    const done = () => { overlay.classList.remove('open', 'closing'); };
+    matchMedia('(prefers-reduced-motion: reduce)').matches ? done() : setTimeout(done, 100);
+  }
+  function commit(i) { if (filtered[i]) { close(); console.log('Run:', filtered[i].label); } }
+
+  q.addEventListener('input', () => { filtered = COMMANDS.filter(c => fuzzy(q.value, c.label)); sel = 0; render(); });
+  document.addEventListener('keydown', e => {
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); overlay.classList.contains('open') ? close() : open(); return; }
+    if (!overlay.classList.contains('open')) return;
+    if (e.key === 'Escape') { e.preventDefault(); close(); }             /* Escape always cancels (desktop-craft #2) */
+    if (e.key === 'ArrowDown') { e.preventDefault(); sel = Math.min(sel + 1, filtered.length - 1); render(); }
+    if (e.key === 'ArrowUp')   { e.preventDefault(); sel = Math.max(sel - 1, 0); render(); }
+    if (e.key === 'Enter')     { e.preventDefault(); commit(sel); }      /* Enter confirms */
+  });
+</script>
+</body>
+</html>

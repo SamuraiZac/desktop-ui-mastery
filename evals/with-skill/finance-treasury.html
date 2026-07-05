@@ -1,0 +1,164 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Ballast - Treasury</title>
+<!-- WITH SKILL. POINT OF VIEW: Corporate money in motion; comprehension outranks
+  charm. One number set genuinely large per zone (N26), consequence stated as a
+  human sentence BEFORE commitment and set in a serif voice, the design's single
+  display moment (Norman: close the gulf of evaluation before the act; Rand: one
+  organizing idea). Ceremony scales with consequence (Taylor): browsing instant,
+  the transfer commits only through the sentence. Ording as tension: the amount
+  gains visible weight on focus. Tokens: --hue 255 --temperature cool --density
+  regular --register instrument, light. Novelty ledger: the consequence sentence
+  as the approval object, with after-states as a balanced ledger line. -->
+<style>
+:root {
+  --n1: oklch(0.98 0.004 255); --n2: oklch(0.962 0.005 255); --n3: oklch(0.938 0.006 255);
+  --n4: oklch(0.91 0.007 255); --n6: oklch(0.845 0.008 255); --n8: oklch(0.55 0.012 255);
+  --n10: oklch(0.4 0.014 255); --n12: oklch(0.17 0.015 255);
+  --navy: oklch(0.36 0.09 260); --navy-hover: oklch(0.31 0.09 260);
+  --ink-serif: Georgia, 'Times New Roman', serif;
+  --ok: oklch(0.5 0.12 155); --hold: oklch(0.58 0.11 75);
+  --m: 150ms; --e: cubic-bezier(0.2,0,0,1);
+}
+@media (prefers-reduced-motion: reduce) { :root { --m: 0ms; } }
+* { box-sizing: border-box; margin: 0; }
+body { font-family: 'Inter','SF Pro Text','Segoe UI Variable',system-ui,sans-serif;
+  font-size: 13px; line-height: 1.45; background: var(--n1); color: var(--n12);
+  height: 100vh; display: flex; overflow: hidden; }
+:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; border-radius: 6px; }
+.num { font-variant-numeric: tabular-nums; }
+.cap { font-size: 10.5px; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; color: var(--n8); }
+
+/* ===== ACCOUNTS RAIL: one big number per account, financial typography ===== */
+.accounts { width: 342px; flex: none; overflow-y: auto; background: var(--n2);
+  border-right: 1px solid var(--n4); padding: 22px 20px; }
+.brand { display: flex; align-items: center; gap: 9px; margin-bottom: 24px; }
+.brand svg { display: block; }
+.brand .t { font-size: 14px; font-weight: 650; letter-spacing: -0.01em; }
+.brand .s { font-size: 11px; color: var(--n8); }
+.acct { position: relative; padding: 14px 14px 14px 16px; margin: 0 -2px 10px; border-radius: 8px;
+  border: 1px solid transparent; cursor: pointer; transition: background var(--m) var(--e), border-color var(--m) var(--e); }
+.acct:hover { background: var(--n1); border-color: var(--n4); }
+.acct[aria-current="true"] { background: var(--n1); border-color: var(--n4); }
+.acct[aria-current="true"]::before { content: ''; position: absolute; left: -1px; top: 10px; bottom: 10px;
+  width: 3px; border-radius: 2px; background: var(--navy); }
+.acct .name { font-size: 12px; color: var(--n8); display: flex; justify-content: space-between; }
+.acct .bal { font-size: 26px; font-weight: 620; letter-spacing: -0.025em; line-height: 1.15; margin-top: 3px; }
+.acct .bal .cur { font-size: 14px; font-weight: 500; color: var(--n8); margin-right: 3px; letter-spacing: 0; }
+.acct .split { display: flex; height: 4px; border-radius: 2px; overflow: hidden; margin-top: 9px; background: var(--n3); }
+.acct .split .avail { background: var(--navy); opacity: 0.55; }
+.acct .sub { font-size: 11.5px; color: var(--n8); margin-top: 6px; }
+.acct .sub b { color: var(--n10); font-weight: 550; }
+.acct .lock { font-size: 11.5px; color: var(--hold); margin-top: 6px; }
+
+/* ===== MOVE MONEY: crafted controls, the sentence as the display moment ===== */
+.flow { flex: 1; min-width: 0; overflow-y: auto; padding: 40px 48px; display: flex; justify-content: center; }
+.zone { width: 100%; max-width: 540px; }
+.flow h1 { font-size: 19px; font-weight: 650; letter-spacing: -0.015em; }
+.lead { color: var(--n8); font-size: 12.5px; margin: 5px 0 26px; max-width: 44ch; }
+.field { margin-bottom: 18px; }
+.field label { display: block; font-size: 11px; font-weight: 600; letter-spacing: 0.07em;
+  text-transform: uppercase; color: var(--n8); margin-bottom: 7px; }
+.sel { position: relative; }
+.sel select { font: inherit; font-size: 13.5px; appearance: none; width: 100%; height: 40px;
+  padding: 0 36px 0 13px; border: 1px solid var(--n4); border-radius: 8px;
+  background: var(--n1); color: var(--n12); cursor: pointer;
+  transition: border-color var(--m) var(--e), background var(--m) var(--e); }
+.sel select:hover { border-color: var(--n6); background: oklch(0.99 0.003 255); }
+.sel::after { content: ''; position: absolute; right: 14px; top: 50%; width: 8px; height: 8px;
+  border-right: 1.5px solid var(--n8); border-bottom: 1.5px solid var(--n8);
+  transform: translateY(-70%) rotate(45deg); pointer-events: none; }
+.amount { font: inherit; width: 100%; height: 52px; padding: 0 14px;
+  font-size: 22px; font-weight: 600; letter-spacing: -0.01em; font-variant-numeric: tabular-nums;
+  border: 1px solid var(--n4); border-radius: 8px; background: var(--n1); color: var(--n12);
+  transform-origin: left center;
+  transition: transform var(--m) var(--e), border-color var(--m) var(--e); }
+.amount:hover { border-color: var(--n6); }
+.amount:focus { transform: scale(1.015); border-color: var(--n8); }
+.field .note { color: var(--n8); font-size: 12px; margin-top: 6px; }
+
+/* THE SENTENCE: what you approve, in its own voice */
+.consequence { margin: 30px 0 0; padding: 22px 24px 20px; border: 1px solid var(--n4);
+  border-top: 3px solid var(--navy); border-radius: 4px 4px 10px 10px; background: oklch(0.99 0.003 255); }
+.consequence .cap { display: block; margin-bottom: 10px; }
+.sentence { font-family: var(--ink-serif); font-size: 18.5px; line-height: 1.5; letter-spacing: 0.002em; color: var(--n12); }
+.sentence b { font-weight: 700; white-space: nowrap; }
+.after { display: grid; grid-template-columns: 1fr auto; gap: 5px 24px; margin-top: 16px;
+  padding-top: 13px; border-top: 1px solid var(--n3); font-size: 12.5px; color: var(--n8); }
+.after .v { text-align: right; color: var(--n10); font-weight: 550; }
+.actions { display: flex; gap: 14px; align-items: center; margin-top: 20px; }
+.approve { font: inherit; font-size: 13.5px; font-weight: 550; height: 40px; padding: 0 20px;
+  border: 0; border-radius: 8px; cursor: pointer; background: var(--navy); color: oklch(0.98 0.004 255);
+  transition: background var(--m) var(--e), transform 80ms var(--e); }
+.approve:hover { background: var(--navy-hover); }
+.approve:active { transform: scale(0.985); }
+.cancel { font: inherit; color: var(--n8); background: none; border: 0; cursor: pointer;
+  padding: 8px 10px; border-radius: 6px; transition: color var(--m) var(--e), background var(--m) var(--e); }
+.cancel:hover { color: var(--n10); background: var(--n2); }
+
+/* ===== RECENT: a ledger, amounts as an aligned column ===== */
+.recent { margin-top: 44px; }
+.recent .cap { display: block; padding-bottom: 8px; border-bottom: 1px solid var(--n4); }
+.ev { display: grid; grid-template-columns: 46px 1fr 118px 90px; gap: 16px; align-items: baseline;
+  padding: 11px 0; border-bottom: 1px solid var(--n3); font-size: 13px; }
+.ev .d { color: var(--n8); font-size: 12px; }
+.ev .what { color: var(--n10); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ev:hover .what { color: var(--n12); }
+.ev .amt { text-align: right; font-weight: 550; }
+.ev .st { text-align: right; font-size: 12px; color: var(--ok); }
+.ev .st.hold { color: var(--hold); }
+</style></head><body>
+<aside class="accounts" aria-label="Accounts">
+  <div class="brand">
+    <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="11" width="18" height="3.2" rx="1.2" fill="oklch(0.36 0.09 260)"/><rect x="6.5" y="5.5" width="11" height="3.2" rx="1.2" fill="oklch(0.36 0.09 260)" opacity="0.45"/><rect x="6.5" y="16.5" width="11" height="3.2" rx="1.2" fill="oklch(0.36 0.09 260)" opacity="0.45"/></svg>
+    <div><div class="t">Ballast Treasury</div><div class="s">Meridian Logistics BV · consolidated ZAR</div></div>
+  </div>
+  <div class="acct" aria-current="true" tabindex="0">
+    <div class="name"><span>Operating · FNB ···8841</span></div>
+    <div class="bal num"><span class="cur">R</span>84,209,114.62</div>
+    <div class="split"><span class="avail" style="width:94%"></span></div>
+    <div class="sub num">Available <b>R 79,340,010</b> · R 4.87M settling</div>
+  </div>
+  <div class="acct" tabindex="0">
+    <div class="name"><span>Payroll · Standard Bank ···2210</span></div>
+    <div class="bal num"><span class="cur">R</span>6,118,400.00</div>
+    <div class="split"><span class="avail" style="width:100%"></span></div>
+    <div class="sub num">25 Jul run needs <b>R 5,942,300</b> · short R 0 after this transfer</div>
+  </div>
+  <div class="acct" tabindex="0">
+    <div class="name"><span>Tax reserve · Investec ···0033</span></div>
+    <div class="bal num"><span class="cur">R</span>12,750,000.00</div>
+    <div class="split"><span class="avail" style="width:0%"></span></div>
+    <div class="lock">Ring-fenced · transfers need CFO co-approval</div>
+  </div>
+</aside>
+<main class="flow">
+  <div class="zone">
+    <h1>Move money</h1>
+    <p class="lead">Nothing moves until you approve the sentence below. Transfers between own accounts stay reversible for 30 minutes.</p>
+    <div class="field"><label for="from">From</label>
+      <div class="sel"><select id="from"><option>Operating · available R 79,340,010.00</option><option>Tax reserve · CFO co-approval required</option></select></div></div>
+    <div class="field"><label for="to">To</label>
+      <div class="sel"><select id="to"><option>Payroll · Standard Bank ···2210</option><option>Tax reserve · Investec ···0033</option></select></div></div>
+    <div class="field"><label for="amt">Amount</label>
+      <input class="amount" id="amt" value="R 5,942,300.00" aria-describedby="amt-note">
+      <div class="note" id="amt-note">Exactly covers the 25 Jul payroll run.</div></div>
+
+    <div class="consequence" aria-live="polite">
+      <span class="cap">You are approving</span>
+      <p class="sentence">Move <b class="num">R 5,942,300.00</b> from <b>Operating</b> to <b>Payroll</b>, arriving today by <b>16:00</b>, at no fee.</p>
+      <div class="after num">
+        <span>Operating afterwards</span><span class="v">R 73,397,710.00</span>
+        <span>Payroll afterwards</span><span class="v">R 12,060,700.00</span>
+        <span>Reversible until</span><span class="v">16:30 today</span>
+      </div>
+    </div>
+    <div class="actions"><button class="approve">Approve this transfer</button><button class="cancel">Cancel</button></div>
+
+    <div class="recent">
+      <span class="cap">Recent movements</span>
+      <div class="ev"><span class="d num">Jul 02</span><span class="what">Monthly tax reserve provision</span><span class="amt num">R 2,400,000</span><span class="st">Settled</span></div>
+      <div class="ev"><span class="d num">Jul 01</span><span class="what">Supplier batch, 14 payments</span><span class="amt num">R 318,440</span><span class="st">Settled</span></div>
+      <div class="ev"><span class="d num">Jun 30</span><span class="what">FX forward margin call, HSBC</span><span class="amt num">R 1,100,000</span><span class="st hold">Clearing Mon</span></div>
+    </div>
+  </div>
+</main>
+</body></html>

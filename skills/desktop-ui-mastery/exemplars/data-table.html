@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Exemplar: Dense Data Table</title>
+<!--
+  EXEMPLAR: THE DENSE DATA TABLE
+  ==============================
+  The single most-fumbled desktop surface. This anatomy encodes:
+  - Tufte: no vertical rules, alignment does columns, hairlines do rows,
+    direct labels, high data-ink ratio, sparkline-class inline data
+  - Andersson/Carter: tabular figures, right-aligned numbers, disambiguated digits
+  - Freiberg/desktop-craft #3: full selection model (click, shift-range,
+    ctrl-toggle, ctrl+a), hover reveals without layout shift, sticky header
+  - Raskin: bulk-select is a VISIBLE state with an explicit count, never hidden
+  Skin is deliberately quiet; derive yours with derive_tokens.py.
+-->
+<style>
+  :root {
+    --neutral-1: oklch(0.985 0.004 250); --neutral-2: oklch(0.968 0.005 250);
+    --neutral-3: oklch(0.945 0.006 250); --neutral-4: oklch(0.92 0.007 250);
+    --neutral-6: oklch(0.85 0.008 250); --neutral-8: oklch(0.56 0.01 250);
+    --neutral-10: oklch(0.40 0.012 250); --neutral-12: oklch(0.15 0.012 250);
+    --accent: oklch(0.55 0.17 255); --accent-subtle: oklch(0.94 0.035 255);
+    --danger: oklch(0.55 0.18 25); --success: oklch(0.55 0.15 150);
+    --font-ui: 'Inter', 'SF Pro Text', 'Segoe UI Variable', system-ui, sans-serif;
+    --motion: 130ms; --ease: cubic-bezier(0.2, 0, 0, 1);
+  }
+  @media (prefers-reduced-motion: reduce) { :root { --motion: 0ms; } }
+  * { box-sizing: border-box; margin: 0; }
+  body { font-family: var(--font-ui); font-size: 13px; line-height: 1.25; color: var(--neutral-12); background: var(--neutral-1); padding: 24px; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+
+  /* Bulk-action bar: appears only with a selection; explicit count (raskin: visible state) */
+  .bulkbar {
+    display: flex; align-items: center; gap: 8px; height: 36px; padding: 0 4px 8px;
+    font-size: 12px; color: var(--neutral-10);
+    visibility: hidden;
+  }
+  .bulkbar.active { visibility: visible; }
+  .bulkbar button {
+    font: inherit; font-size: 12px; height: 26px; padding: 0 10px;
+    border: 1px solid var(--neutral-4); border-radius: 4px;
+    background: var(--neutral-2); color: var(--neutral-12); cursor: pointer;
+    transition: background var(--motion) var(--ease);
+  }
+  .bulkbar button:hover { background: var(--neutral-3); }
+  .bulkbar .danger { color: var(--danger); }
+
+  table { width: 100%; border-collapse: collapse; }
+  /* Header: sticky, tone-separated; sortable columns are real buttons (keyboard-reachable) */
+  thead th {
+    position: sticky; top: 0; z-index: 1;
+    background: var(--neutral-1);
+    border-bottom: 1px solid var(--neutral-6); /* one strong hairline under the header, nothing vertical (tufte) */
+    padding: 0;
+    text-align: left; font-weight: 500; font-size: 12px; color: var(--neutral-8);
+  }
+  thead th.num { text-align: right; }
+  thead th button {
+    all: unset; display: block; width: 100%; padding: 8px 10px; cursor: pointer;
+    box-sizing: border-box;
+  }
+  thead th button:hover { color: var(--neutral-12); }
+  thead th[aria-sort] button::after { content: " \2193"; color: var(--neutral-8); font-size: 11px; }
+  thead th[aria-sort="ascending"] button::after { content: " \2191"; }
+
+  tbody tr {
+    height: 32px; /* 28-36px density band (desktop-craft #1) */
+    border-bottom: 1px solid var(--neutral-3); /* half-tone hairline rows */
+    transition: background var(--motion) var(--ease);
+    cursor: default;
+  }
+  tbody tr:hover { background: var(--neutral-2); }
+  tbody tr[aria-selected="true"] { background: var(--accent-subtle); }
+  td { padding: 0 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 320px; }
+  /* Numbers: right-aligned, tabular, so magnitude is scannable as a column (tufte, andersson) */
+  td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  td .sub { color: var(--neutral-8); font-size: 12px; margin-left: 6px; }
+  td.delta-up { color: var(--success); }
+  td.delta-down { color: var(--danger); }
+  /* Inline trend: word-sized graphic in the row flow, Tufte's sparkline */
+  .spark { width: 64px; height: 16px; vertical-align: middle; }
+  .spark polyline { fill: none; stroke: var(--neutral-8); stroke-width: 1.5; }
+  tr:hover .spark polyline { stroke: var(--neutral-12); }
+  /* Row actions: reserved column, opacity reveal, zero layout shift (freiberg) */
+  td.actions { width: 70px; text-align: right; }
+  td.actions button {
+    font: inherit; font-size: 12px; color: var(--neutral-10);
+    background: none; border: 0; padding: 3px 6px; border-radius: 4px; cursor: pointer;
+    opacity: 0; transition: opacity var(--motion) var(--ease);
+  }
+  tr:hover td.actions button, tr:focus-within td.actions button { opacity: 1; }
+  td.actions button:hover { background: var(--neutral-3); color: var(--neutral-12); }
+  .checkcol { width: 32px; padding: 0 0 0 10px; }
+</style>
+</head>
+<body>
+
+<div class="bulkbar" id="bulkbar" aria-live="polite">
+  <span id="bulkcount">0 selected</span>
+  <button>Export</button><button>Reassign</button><button class="danger">Archive</button>
+</div>
+
+<table id="grid" aria-label="Instrument positions">
+  <thead>
+    <tr>
+      <th class="checkcol"><input type="checkbox" id="selall" aria-label="Select all rows"></th>
+      <th><button>Instrument</button></th>
+      <th class="num" aria-sort="descending"><button>Position</button></th>
+      <th class="num"><button>Avg cost</button></th>
+      <th class="num"><button>Last</button></th>
+      <th class="num"><button>P&amp;L</button></th>
+      <th><button>30d</button></th>
+      <th class="actions"><span style="padding:0 10px"></span></th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Realistic identifiers and magnitudes; long-name truncation is designed, not accidental -->
+    <tr tabindex="0"><td class="checkcol"><input type="checkbox" aria-label="Select row"></td><td>Krugerrand 1oz<span class="sub">ZAR</span></td><td class="num">1,240</td><td class="num">42,180.00</td><td class="num">44,905.50</td><td class="num delta-up">+3,379,620</td><td><svg class="spark" viewBox="0 0 64 16"><polyline points="0,12 10,11 20,13 30,9 40,8 50,5 64,3"/></svg></td><td class="actions"><button>Open</button></td></tr>
+    <tr tabindex="0"><td class="checkcol"><input type="checkbox" aria-label="Select row"></td><td>Silver bar 500g<span class="sub">ZAR</span></td><td class="num">8,430</td><td class="num">9,120.00</td><td class="num">8,884.25</td><td class="num delta-down">-1,987,553</td><td><svg class="spark" viewBox="0 0 64 16"><polyline points="0,4 10,6 20,5 30,8 40,9 50,11 64,12"/></svg></td><td class="actions"><button>Open</button></td></tr>
+    <tr tabindex="0"><td class="checkcol"><input type="checkbox" aria-label="Select row"></td><td>Gold bar 100g<span class="sub">ZAR</span></td><td class="num">312</td><td class="num">198,400.00</td><td class="num">204,110.75</td><td class="num delta-up">+1,781,754</td><td><svg class="spark" viewBox="0 0 64 16"><polyline points="0,10 10,9 20,10 30,7 40,7 50,4 64,4"/></svg></td><td class="actions"><button>Open</button></td></tr>
+    <tr tabindex="0"><td class="checkcol"><input type="checkbox" aria-label="Select row"></td><td>Platinum coin 1oz<span class="sub">ZAR</span></td><td class="num">96</td><td class="num">19,850.00</td><td class="num">18,930.00</td><td class="num delta-down">-88,320</td><td><svg class="spark" viewBox="0 0 64 16"><polyline points="0,6 10,7 20,9 30,8 40,10 50,12 64,11"/></svg></td><td class="actions"><button>Open</button></td></tr>
+  </tbody>
+</table>
+
+<script>
+  /* Selection model (desktop-craft #3): click selects, Ctrl/Cmd toggles,
+     Shift extends a range, Ctrl/Cmd+A selects all, arrows move, Space toggles. */
+  const rows = [...document.querySelectorAll('#grid tbody tr')];
+  const bulkbar = document.getElementById('bulkbar');
+  const bulkcount = document.getElementById('bulkcount');
+  let anchor = 0;
+
+  function paint() {
+    const n = rows.filter(r => r.getAttribute('aria-selected') === 'true').length;
+    bulkbar.classList.toggle('active', n > 0);
+    bulkcount.textContent = n + ' selected';
+    rows.forEach(r => r.querySelector('input[type=checkbox]').checked = r.getAttribute('aria-selected') === 'true');
+  }
+  function setSel(i, on) { rows[i].setAttribute('aria-selected', on ? 'true' : 'false'); }
+  function only(i) { rows.forEach((_, j) => setSel(j, j === i)); anchor = i; }
+  function range(a, b) { rows.forEach((_, j) => setSel(j, j >= Math.min(a,b) && j <= Math.max(a,b))); }
+
+  rows.forEach((row, i) => {
+    row.addEventListener('click', e => {
+      if (e.target.closest('button')) return;
+      if (e.shiftKey) range(anchor, i);
+      else if (e.metaKey || e.ctrlKey || e.target.type === 'checkbox')
+        setSel(i, row.getAttribute('aria-selected') !== 'true');
+      else only(i);
+      paint();
+    });
+    row.addEventListener('keydown', e => {
+      if (e.key === 'ArrowDown' && rows[i+1]) { e.preventDefault(); rows[i+1].focus(); if (e.shiftKey) { range(anchor, i+1); paint(); } }
+      if (e.key === 'ArrowUp' && rows[i-1]) { e.preventDefault(); rows[i-1].focus(); if (e.shiftKey) { range(anchor, i-1); paint(); } }
+      if (e.key === ' ') { e.preventDefault(); setSel(i, row.getAttribute('aria-selected') !== 'true'); anchor = i; paint(); }
+    });
+  });
+  document.getElementById('selall').addEventListener('change', e => { rows.forEach((_, j) => setSel(j, e.target.checked)); paint(); });
+  document.addEventListener('keydown', e => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'a' && document.activeElement.closest('#grid')) {
+      e.preventDefault(); rows.forEach((_, j) => setSel(j, true)); paint();
+    }
+  });
+</script>
+</body>
+</html>
