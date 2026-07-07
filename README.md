@@ -49,7 +49,40 @@ Appends a block to `./AGENTS.md` telling the agent to read the skill for desktop
 
 Rename `hooks/hooks.json.example` to `hooks/hooks.json` and every HTML/CSS/JSX/TSX write is checked for generated-UI tells automatically (non-blocking; requires python3). The Claude Code plugin install picks this up when enabled.
 
-Then prompt naturally: "Design the main workspace for a fleet-monitoring desktop app."
+## How to use it
+
+No invocation syntax needed — describe the work and the skill routes itself into
+one of five modes:
+
+- **Generate** — "Design the main workspace for a fleet-monitoring desktop app."
+  Full workflow: framing, lens selection, exemplar anatomy, derived tokens,
+  lint-verified output.
+- **Advise** — "I want design direction for my app's three panels — don't build
+  anything yet." Same framing and lenses, but the deliverable is principle-cited
+  direction in prose; token/lint machinery is skipped. If you follow up with
+  "now build it," the framing carries into Generate.
+- **Critique** — "Review this screen and tell me honestly if it looks
+  AI-generated." Runs the slop linter, then a six-step review. Also available
+  directly as `/ui-critique <file-or-description>`.
+- **Deslop** — "This dropdown looks generic, fix just this component." Linter →
+  targeted fixes → re-lint. Also `/ui-deslop <file>`. Small asks stay small:
+  a component fix will not summon the full design-system ceremony.
+- **Envision** — "What would desktop email look like in 2035?" Weights the
+  paradigm thinkers (Victor, Kay, Raskin, Yuan) and keeps a path back to
+  something buildable. Also `/ui-envision <topic>`.
+
+Things worth asking for explicitly:
+
+- **A token system**: "Give me the complete design token system for a marine
+  cargo insurance desktop app: calm, dense, trustworthy." You get a full OKLCH
+  light+dark system derived from the brief — hue, temperature, density, and
+  register are argued, not picked from a menu.
+- **A design POV**: after any substantial session, the decisions land in
+  `DESIGN-POV.md` in your project; later sessions read it and treat past
+  decisions as binding, so the app stays coherent across weeks.
+- **The linter, standalone**: `python3 skills/desktop-ui-mastery/scripts/lint_slop.py
+  <file.html>` — deterministic checks for placeholder copy, suppressed focus,
+  website-scale type, dead hovers, and missing tabular figures.
 
 ## What's inside
 
@@ -61,7 +94,7 @@ desktop-ui-mastery/
 │   └── marketplace.json               One-line /plugin install for Claude Code
 ├── commands/                          /ui-critique  /ui-deslop  /ui-envision
 ├── hooks/hooks.json.example           Optional PostToolUse auto-lint
-├── evals/                             14 graded briefs across all four modes
+├── evals/                             14 graded briefs + trigger eval harness
 └── skills/desktop-ui-mastery/
     ├── SKILL.md                       Router: modes, workflow, lens matrix, anti-patterns
     ├── exemplars/                     Four annotated working anatomies; every
@@ -106,7 +139,9 @@ Every name earned inclusion by two tests: shipped or paradigm-defining work, and
 
 ## Evidence
 
-`evals/` contains 14 graded briefs spanning all four modes. Five have been run end to end with deterministic lint numbers (baseline: 13 severe findings; with-skill: 0), two brought to full visual polish with published comparisons, alongside an honest statement of the methodology's limits: the runs are self-produced demonstrations, and independent numbers come from running the set in your own Claude Code. The plugin holds itself to its own standard: receipts, with their caveats attached.
+`evals/` contains 14 graded briefs spanning the modes. Five have been run end to end with deterministic lint numbers (baseline: 13 severe findings; with-skill: 0), two brought to full visual polish with published comparisons, alongside an honest statement of the methodology's limits: the runs are self-produced demonstrations, and independent numbers come from running the set in your own Claude Code. The plugin holds itself to its own standard: receipts, with their caveats attached.
+
+Two measured results from the v1.1.x cycle. Head-to-head (three briefs × three runs per configuration, graded against written expectations): v1.1.0 passed 100% ± 0% of expectations vs 92% ± 14% for v1.0.0 — the delta is the Advise mode, which answers direction-only asks in prose instead of running token derivation for a question that wanted thinking (9k fewer tokens, 68s faster on that brief). Triggering (`evals/trigger/`, 20 realistic queries, 12 train / 8 holdout): the v1.1.1 description scores 94% train / 88% holdout accuracy at 100% precision — zero false triggers on the negatives — up from 78% / 83%.
 
 ## Extending
 

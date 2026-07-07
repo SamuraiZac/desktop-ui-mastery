@@ -1,0 +1,22 @@
+[
+  {"query": "my electron app's settings page looks like every ai-generated dashboard ever, 3 columns of cards with little icons. can you make it feel like an actual mac app", "should_trigger": true},
+  {"query": "Design the main workspace for our warehouse scanning desktop tool — operators use it 8 hours a day on Windows, keyboard only, barcode scanner input, they hate mice", "should_trigger": true},
+  {"query": "I'm adding a command palette to my tauri app (about 45 actions across projects and settings). specify the behavior properly and build it", "should_trigger": true},
+  {"query": "why does everything you design look the same? centered hero, gradient, three feature cards. I want the dashboard for my trading journal desktop app to feel Linear-quality", "should_trigger": true},
+  {"query": "give me a full design token system for a desktop CRM used by funeral homes. somber but not depressing, dense data tables, needs dark mode from day one", "should_trigger": true},
+  {"query": "can you review src/renderer/Dashboard.tsx and tell me honestly if it looks AI generated? be brutal, i can take it", "should_trigger": true},
+  {"query": "what would desktop email look like in 2035 if an agent handles 90% of the messages? sketch the interface concept but keep a path back to something buildable", "should_trigger": true},
+  {"query": "our internal claims admin tool (react in an electron shell) needs its queue screen redesigned. assessors keyboard through 100+ claims a day and the current one is slow", "should_trigger": true},
+  {"query": "before i start building: i want design direction for the three panels of my note-taking app — what should each panel believe? dont write code yet", "should_trigger": true},
+  {"query": "make this settings screen feel like native macOS instead of a webpage, file is ~/code/syncapp/src/Settings.tsx", "should_trigger": true},
+  {"query": "design a landing page for our SaaS — hero, pricing tiers, testimonials, mobile-first, needs to convert", "should_trigger": false},
+  {"query": "can you design the REST API for my desktop app's sync backend? endpoints, auth, conflict resolution", "should_trigger": false},
+  {"query": "my iOS app's onboarding flow needs work — 5 screens in SwiftUI, drop-off is at screen 3", "should_trigger": false},
+  {"query": "build a CLI tool for our deploy scripts with nice terminal output, colors and progress bars", "should_trigger": false},
+  {"query": "help me pick a color palette for my wedding invitations, venue is a vineyard", "should_trigger": false},
+  {"query": "the desktop app crashes when I resize the window on linux, here's the stack trace — segfault in wgpu", "should_trigger": false},
+  {"query": "write the product requirements document for our new desktop client, target personas and feature list", "should_trigger": false},
+  {"query": "design the database schema for a desktop notes app — notes, tags, backlinks, attachments", "should_trigger": false},
+  {"query": "can you copy Stripe's dashboard exactly for our billing page? same colors, same layout, same everything", "should_trigger": false},
+  {"query": "make my project's README look nicer — badges, a screenshot section, better headings", "should_trigger": false}
+]
