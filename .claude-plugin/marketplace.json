@@ -6,14 +6,14 @@
   },
   "metadata": {
     "description": "Reasoning-first desktop UI design skill, commands, and machinery.",
-    "version": "1.1.0"
+    "version": "1.1.1"
   },
   "plugins": [
     {
       "name": "desktop-ui-mastery",
       "source": "./",
       "description": "Design world-class desktop application interfaces by synthesizing principles from 30 masters of design. Skill, /ui-critique /ui-deslop /ui-envision commands, token derivation, slop linting, and optional auto-lint hooks.",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "license": "MIT",
       "keywords": ["design", "ui", "desktop", "design-system", "critique", "typography", "tokens"]
     }
