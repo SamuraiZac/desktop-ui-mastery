@@ -6,6 +6,8 @@ The reasoning-first UI design plugin for Claude Code, focused on desktop applica
 
 Not a style database. Not a brand-token library. The popular design skills are style pickers (searchable menus of glassmorphism and claymorphism palettes) or brand cloners (pixel-accurate "build it like Stripe" tokens). This plugin takes the opposite bet: teach the model the reasoning of the best designers in history, force deliberate tension between influences, verify the output against the rules, and test it for originality. Steal like an artist, from the masters, toward the future.
 
+Sibling project: [web-ui-mastery](https://github.com/SamuraiZac/web-ui-mastery) for websites and web applications. The two route cleanly: desktop shells here, browser surfaces there.
+
 ## Install
 
 ### One line, any tool
