@@ -1,0 +1,118 @@
+{
+  "skill_name": "desktop-ui-mastery",
+  "_note": "skill-creator-compatible mirror of briefs.json; briefs.json remains the source of truth",
+  "evals": [
+    {
+      "id": 1,
+      "name": "dash-fleet",
+      "mode": "generate",
+      "prompt": "Design and build the main dashboard for a desktop app that monitors a delivery fleet of 300 vehicles: live status, exceptions, fuel, and route adherence. Ops staff live in this screen all day.",
+      "expected_output": "A complete, original desktop UI artifact with a written point of view. Graded against: No severe findings from scripts/lint_slop.py; A written point of view accompanies the design and could not describe a competitor unchanged; Desktop anatomy present (no centered column; correct density; status/persistence thinking); Full keyboard path and visible focus for the primary loop; Tabular figures in numeric columns; accent used on a handful of elements; Not recognizable as any specific existing product's screen; At least one design element that exists in no reference file (novelty ledger)",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "admin-claims",
+      "mode": "generate",
+      "prompt": "Build the claims-processing workspace for an insurance back-office desktop tool. Assessors process 80-120 claims a day; speed and keyboard flow matter more than anything.",
+      "expected_output": "A complete, original desktop UI artifact with a written point of view. Graded against: No severe findings from scripts/lint_slop.py; A written point of view accompanies the design and could not describe a competitor unchanged; Desktop anatomy present (no centered column; correct density; status/persistence thinking); Full keyboard path and visible focus for the primary loop; Tabular figures in numeric columns; accent used on a handful of elements; Not recognizable as any specific existing product's screen; At least one design element that exists in no reference file (novelty ledger)",
+      "files": []
+    },
+    {
+      "id": 3,
+      "name": "editor-recipes",
+      "mode": "generate",
+      "prompt": "Design a desktop editor for a food magazine's recipe database: structured fields, images, versioning, editorial review states.",
+      "expected_output": "A complete, original desktop UI artifact with a written point of view. Graded against: No severe findings from scripts/lint_slop.py; A written point of view accompanies the design and could not describe a competitor unchanged; Desktop anatomy present (no centered column; correct density; status/persistence thinking); Full keyboard path and visible focus for the primary loop; Tabular figures in numeric columns; accent used on a handful of elements; Not recognizable as any specific existing product's screen; At least one design element that exists in no reference file (novelty ledger)",
+      "files": []
+    },
+    {
+      "id": 4,
+      "name": "finance-treasury",
+      "mode": "generate",
+      "prompt": "Design the position overview and transfer flow for a corporate treasury desktop app. Money moves here; trust and comprehension outrank charm.",
+      "expected_output": "A complete, original desktop UI artifact with a written point of view. Graded against: No severe findings from scripts/lint_slop.py; A written point of view accompanies the design and could not describe a competitor unchanged; Desktop anatomy present (no centered column; correct density; status/persistence thinking); Full keyboard path and visible focus for the primary loop; Tabular figures in numeric columns; accent used on a handful of elements; Not recognizable as any specific existing product's screen; At least one design element that exists in no reference file (novelty ledger)",
+      "files": []
+    },
+    {
+      "id": 5,
+      "name": "notes-research",
+      "mode": "generate",
+      "prompt": "Build a desktop research-notes tool for a PhD student: capture, link, and retrieve thousands of notes and PDFs. Should feel like a thinking space, not a database.",
+      "expected_output": "A complete, original desktop UI artifact with a written point of view. Graded against: No severe findings from scripts/lint_slop.py; A written point of view accompanies the design and could not describe a competitor unchanged; Desktop anatomy present (no centered column; correct density; status/persistence thinking); Full keyboard path and visible focus for the primary loop; Tabular figures in numeric columns; accent used on a handful of elements; Not recognizable as any specific existing product's screen; At least one design element that exists in no reference file (novelty ledger)",
+      "files": []
+    },
+    {
+      "id": 6,
+      "name": "palette-add",
+      "mode": "generate",
+      "prompt": "Add a command palette to an existing project-management desktop app with 60 actions across projects, tasks, people, and views. Specify behavior fully and build it.",
+      "expected_output": "A complete, original desktop UI artifact with a written point of view. Graded against: No severe findings from scripts/lint_slop.py; A written point of view accompanies the design and could not describe a competitor unchanged; Desktop anatomy present (no centered column; correct density; status/persistence thinking); Full keyboard path and visible focus for the primary loop; Tabular figures in numeric columns; accent used on a handful of elements; Not recognizable as any specific existing product's screen; At least one design element that exists in no reference file (novelty ledger)",
+      "files": []
+    },
+    {
+      "id": 7,
+      "name": "settings-sync",
+      "mode": "generate",
+      "prompt": "Design the settings surface for a file-sync desktop app: account, sync rules, bandwidth, conflicts, notifications, and a safe path to unlinking a machine.",
+      "expected_output": "A complete, original desktop UI artifact with a written point of view. Graded against: No severe findings from scripts/lint_slop.py; A written point of view accompanies the design and could not describe a competitor unchanged; Desktop anatomy present (no centered column; correct density; status/persistence thinking); Full keyboard path and visible focus for the primary loop; Tabular figures in numeric columns; accent used on a handful of elements; Not recognizable as any specific existing product's screen; At least one design element that exists in no reference file (novelty ledger)",
+      "files": []
+    },
+    {
+      "id": 8,
+      "name": "utility-clip",
+      "mode": "generate",
+      "prompt": "Design a clipboard-history utility for desktop power users. It should barely exist until summoned.",
+      "expected_output": "A complete, original desktop UI artifact with a written point of view. Graded against: No severe findings from scripts/lint_slop.py; A written point of view accompanies the design and could not describe a competitor unchanged; Desktop anatomy present (no centered column; correct density; status/persistence thinking); Full keyboard path and visible focus for the primary loop; Tabular figures in numeric columns; accent used on a handful of elements; Not recognizable as any specific existing product's screen; At least one design element that exists in no reference file (novelty ledger)",
+      "files": []
+    },
+    {
+      "id": 9,
+      "name": "onboard-analytics",
+      "mode": "generate",
+      "prompt": "Design the first-run experience for a desktop analytics tool so a new user reaches their first real insight from their own data inside five minutes.",
+      "expected_output": "A complete, original desktop UI artifact with a written point of view. Graded against: No severe findings from scripts/lint_slop.py; A written point of view accompanies the design and could not describe a competitor unchanged; Desktop anatomy present (no centered column; correct density; status/persistence thinking); Full keyboard path and visible focus for the primary loop; Tabular figures in numeric columns; accent used on a handful of elements; Not recognizable as any specific existing product's screen; At least one design element that exists in no reference file (novelty ledger)",
+      "files": []
+    },
+    {
+      "id": 10,
+      "name": "critique-slop",
+      "mode": "critique",
+      "prompt": "Review this dashboard implementation for design quality and tell me exactly what to fix. [attach any generated dashboard HTML, or use evals/fixtures if you add them]",
+      "expected_output": "A six-step critique: POV, 100x action, mechanics pass/fail, lens fidelity with cited principles, distance checks, verdict with top-3 principle-tied fixes.",
+      "files": []
+    },
+    {
+      "id": 11,
+      "name": "deslop-admin",
+      "mode": "deslop",
+      "prompt": "This admin panel looks AI-generated. Strip the generic tells without changing its features. [attach generated admin panel code]",
+      "expected_output": "The same features with generated-UI tells removed in the prescribed order, zero severe lint findings, and a report of what changed. No new styling direction.",
+      "files": []
+    },
+    {
+      "id": 12,
+      "name": "envision-email",
+      "mode": "envision",
+      "prompt": "Imagine the future of desktop email for someone who receives 300 messages a day. Break one assumption, keep it learnable, and show me the ladder back to something buildable this year.",
+      "expected_output": "Primitives + grammar before visuals, exactly one paradigm assumption broken, key flows, and an honest ladder back to something buildable this year.",
+      "files": []
+    },
+    {
+      "id": 13,
+      "name": "envision-ide-ai",
+      "mode": "envision",
+      "prompt": "Imagine what a desktop IDE looks like when an AI writes 80% of the code. Where does the human's attention and authorship live?",
+      "expected_output": "Primitives + grammar before visuals, exactly one paradigm assumption broken, key flows, and an honest ladder back to something buildable this year.",
+      "files": []
+    },
+    {
+      "id": 14,
+      "name": "tokens-derive",
+      "mode": "generate",
+      "prompt": "Create the complete design token system for a desktop app for marine cargo insurers: calm, dense, trustworthy. Explain every derivation.",
+      "expected_output": "A complete, original desktop UI artifact with a written point of view. Graded against: No severe findings from scripts/lint_slop.py; A written point of view accompanies the design and could not describe a competitor unchanged; Desktop anatomy present (no centered column; correct density; status/persistence thinking); Full keyboard path and visible focus for the primary loop; Tabular figures in numeric columns; accent used on a handful of elements; Not recognizable as any specific existing product's screen; At least one design element that exists in no reference file (novelty ledger)",
+      "files": []
+    }
+  ]
+}
